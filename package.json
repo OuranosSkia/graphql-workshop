@@ -1,0 +1,31 @@
+{
+  "name": "graphql-workshop",
+  "version": "0.1.0",
+  "description": "GraphQL Workshop",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js -e js,pug"
+  },
+  "author": "Barry Dutton <ugapiro@gmail.com>",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "confidence": "3.x.x",
+    "glue": "5.0.0",
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "good-squeeze": "^5.1.0",
+    "hapi": "17.5.3",
+    "hoek": "5.0.4",
+    "inert": "^5.1.0",
+    "lout": "^11.1.0",
+    "pug": "^2.0.3",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "vision": "5.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.3"
+  }
+}
