@@ -326,7 +326,7 @@ How to set it up:
     }
   }
   ```
-* In your `client/src/App.js`, update your seal query to pass this input value in.
+* In your `client/src/App.js`, update your `rocks` query to pass this input value in.
   ```
   items(shouldUnscramble: true)
   ```
