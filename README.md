@@ -1,5 +1,5 @@
 # GraphQL Workshop
-This workshop is intended to give you a brief overview of how to set up and work with GraphQL from both the client and the server. This is intended to walk through some core concepts, but every system is different and there are many ways to do GraphQL! The system you use may be slightly different than this, but should generally follow these conepts.
+This workshop is intended to give you a brief overview of how to set up and work with GraphQL from both the client and the server. This is intended to walk through some core concepts, but every system is different and there are many ways to do GraphQL! The system you use may be slightly different than this, but should generally follow these concepts.
 
 ## Phase 0 - Prerequisites
 This workshop uses `nodejs@8.x.x` and `yarn`. If you don't have them installed, please do so now:
@@ -32,7 +32,7 @@ The first piece you need before you can really dive into writing your own GraphQ
   ```sh
   yarn add apollo-server-hapi@^2.6.3 graphql@^14.3.1
   ```
-* Create a `schema.graphql` file with the following dummy graphql:
+* Create a `schema.graphql` file in the root directory with the following dummy graphql:
   ```graphql
   type Query {
     example: String
@@ -56,7 +56,7 @@ The first piece you need before you can really dive into writing your own GraphQ
   })
   ```
 
-Once all of these steps are done, you can run `yarn start` and navigate to http://localhost:8080/graphql to open up playground and see your example schema!
+Once all of these steps are done, you can run `yarn start` in the root directory and navigate to http://localhost:8080/graphql to open up playground and see your example schema!
 
 ## Phase 2 - Implementing your schemas and resolvers
 The next step in this process is to build schemas which match the data structure of your REST endpoints and then set up resolvers to retrieve that data. As it works out, both our REST endpoints have the same data structure. For the purpose of this workshop though, we are going to define different types for them.
@@ -119,7 +119,7 @@ type LakeItem {
 Now, if you run `yarn start` again and reload the GraphQL playground, you should be able to see the schemas you put in place! You will notice, however, that if you attempt to build a query to call the new query fields, it just returns `null`! This is because we don't have any resolvers defined to actually put data in our queries. This leads us into our next section:
 
 ### Building your resolvers
-Since our schemas match our REST api's, writing the resolvers should be very simple. The structure for the resolvers that you pass into the apollo server follows a very specific format:
+Since our schemas match our REST APIs, writing the resolvers should be very simple. The structure for the resolvers that you pass into the apollo server follows a very specific format:
 ```
 {
   <TypeName>: {
@@ -135,7 +135,7 @@ As well, GraphQL has default functionality to pass information through and resol
 Given all of this, when we look at our schema, we see that there are only two resolvers we need to handle: the `lake` and `rocks` fields on the `Query` type. In these places we will want to retrieve the data from the backend and return it. Once it is returned from here, the structure will match our schema and we need no more resolvers!
 
 So, here's what we need to do:
-* Create a `resolvers.js` file and add the following code:
+* Create a `resolvers.js` file in the root directory and add the following code:
   ```javascript
   const rp = require('request-promise-native');
 
@@ -275,7 +275,7 @@ If we did this, then we'd just combine our render sections and load it as a sing
 
 Sometimes though, your data is not related and is even built from different reusable components. In these cases, you wouldn't want to smoosh your GraphQL queries into a single one because then you'd have to custom write the queries for every use of those components. This is where query batching comes in handy.
 
-With query batching, the client is set up to wait a small amount of time (10ms by default) after receiving a query to see if it gets any more. Once it is done waiting, it will take all the qureies it received and send them to the server in an array. You will get back an array response in the same order and the client will resolve them back to their original query requests!
+With query batching, the client is set up to wait a small amount of time (10ms by default) after receiving a query to see if it gets any more. Once it is done waiting, it will take all the queries it received and send them to the server in an array. You will get back an array response in the same order and the client will resolve them back to their original query requests!
 
 How to set it up:
 * In your `client/` folder, remove apollo-boost with: 
@@ -315,7 +315,7 @@ How to set it up:
   items(shouldUnscramble: Boolean = false): [RocksItem!]!
   ```
   * We are putting the input on the `items` field instead of the `rocks` field on `Query` because we only want to run this operation if the user actually requests the items.
-* Add a new resolver in `resolvers.js` for the `items` field of the `Rocks` type. This resolver should look for the `shouldUnscramble` field on the `args` object and then if it's true, run a sort on the items data:
+* Add a new resolver in `resolvers.js` for the `items` field of the `Rocks` type. This resolver should be added as another property on the module.exports object. It should look for the `shouldUnscramble` field on the `args` object and then if it's true, run a sort on the items data:
   ```js
   Rocks: {
     items: (data, args, context, info) => {
